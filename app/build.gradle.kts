@@ -10,9 +10,9 @@ android {
     defaultConfig {
         applicationId = "com.ndzl.a14challenger"
         minSdk = 29
-        targetSdk = 29
+        targetSdk = 34
         versionCode = 1
-        versionName = "1.1 API t29"
+        versionName = "1.2 CREDENTIAL MANAGER"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

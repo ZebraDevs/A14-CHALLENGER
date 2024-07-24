@@ -28,8 +28,8 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                    android:onClick="onClickbtn_TYPED_FGS"
-                android:text="TYPED_FGS" />
+                android:onClick="onClickbtn_TYPED_FGS"
+                android:text="TYPED\nFGS" />
 
             <Button
                 android:id="@+id/btn_CREDENTIAL_MANAGER"
@@ -39,8 +39,7 @@
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
                 android:onClick="onClickbtn_CREDENTIAL_MANAGER"
-                android:text="CREDENTIAL_MANAGER" />
-
+                android:text="CREDENTIAL\nMANAGER" />
 
         </LinearLayout>
 
