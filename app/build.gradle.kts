@@ -12,7 +12,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.2 CREDENTIAL MANAGER"
+        versionName = "1.2 Credential Manager exerciser"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -75,4 +75,8 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.androidx.credentials.v122)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.kotlinx.coroutines.android)
 }
