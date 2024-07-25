@@ -17,11 +17,18 @@ import androidx.credentials.CreateCredentialRequest
 import androidx.credentials.CreateCredentialResponse
 import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.GetPasswordOption
+import androidx.credentials.PasswordCredential
+import androidx.credentials.PublicKeyCredential
 import androidx.credentials.exceptions.CreateCredentialCancellationException
 import androidx.credentials.exceptions.CreateCredentialException
+import androidx.credentials.exceptions.GetCredentialException
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -111,6 +118,90 @@ class MainActivity2 : AppCompatActivity() {
         }
 
 
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    fun  onClickbtn_CREDENTIAL_MANAGER_GOOGLEFLOW(v: View?) {
+        try {
+
+            if(!this::credentialManager.isInitialized)
+                credentialManager = CredentialManager.create( applicationContext )
+
+            val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId("125566413388-7uolsjhotn185bvqe2ffu0i47rjqljlj.apps.googleusercontent.com")  //replace with your Web application type client ID is your backend server's OAuth 2.0 client ID
+                .setAutoSelectEnabled(false)
+                .setNonce("NOPE! NDZL")
+            .build()
+
+            val request: GetCredentialRequest = GetCredentialRequest.Builder()
+                .addCredentialOption( googleIdOption )
+                .build()
+
+            GlobalScope.launch {
+                try {
+                    val result = credentialManager.getCredential(
+                        request = request,
+                        context = this@MainActivity2,
+                    )
+                    handleSignIn(result)
+                } catch (e: GetCredentialException) {
+                    Log.e("onClickbtn_CREDENTIAL_MANAGER_GOOGLEFLOW", "#1 " + e.message)
+                }
+            }
+
+
+        } catch (e: Exception) {
+            Log.e("onClickbtn_CREDENTIAL_MANAGER_GOOGLEFLOW", "#2 " + e.message)
+        }
+    }
+
+    fun handleSignIn(result: GetCredentialResponse) {
+        // Handle the successfully returned credential.
+        val credential = result.credential
+
+        when (credential) {
+
+            // Passkey credential
+            is PublicKeyCredential -> {
+                // Share responseJson such as a GetCredentialResponse on your server to
+                // validate and authenticate
+                val responseJson = credential.authenticationResponseJson
+            }
+
+            // Password credential
+            is PasswordCredential -> {
+                // Send ID and password to your server to validate and authenticate.
+                val username = credential.id
+                val password = credential.password
+            }
+
+            // GoogleIdToken credential
+            is CustomCredential -> {
+                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    try {
+                        // Use googleIdTokenCredential and extract id to validate and
+                        // authenticate on your server.
+                        val googleIdTokenCredential = GoogleIdTokenCredential
+                            .createFrom(credential.data)
+
+                        val idToken = googleIdTokenCredential.idToken
+                        Log.i("handleSignIn", "Received Google ID token: $idToken ")
+                    } catch (e: GoogleIdTokenParsingException) {
+                        Log.e("handleSignIn", "Received an invalid google id token response", e)
+                    }
+                } else {
+                    // Catch any unrecognized custom credential type here.
+                    Log.e("handleSignIn", "Unexpected#1 type of credential")
+                }
+            }
+
+            else -> {
+                // Catch any unrecognized credential type here.
+                Log.e("handleSignIn", "Unexpected#2 type of credential")
+            }
+        }
     }
 
 
