@@ -32,16 +32,40 @@
                 android:text="TYPED\nFGS" />
 
             <Button
-                android:id="@+id/btn_CREDENTIAL_MANAGER"
+                android:id="@+id/btn_CREDENTIAL_MANAGER_STORE_PWD"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_weight="1"
-                android:onClick="onClickbtn_CREDENTIAL_MANAGER"
+                android:onClick="onClickbtn_CREDENTIAL_MANAGER_STORE_PWD"
                 android:text="CREDENTIAL\nMANAGER" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_CREDENTIAL_MANAGER_RETRIEVE_PWD"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickbtn_CREDENTIAL_MANAGER_RETRIEVE_PWD"
+                android:text="TYPED\nFGS" />
+
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </ScrollView>

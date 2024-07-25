@@ -17,7 +17,9 @@ import androidx.credentials.CreateCredentialRequest
 import androidx.credentials.CreateCredentialResponse
 import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CredentialManager
+import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
+import androidx.credentials.GetPasswordOption
 import androidx.credentials.exceptions.CreateCredentialCancellationException
 import androidx.credentials.exceptions.CreateCredentialException
 import kotlinx.coroutines.GlobalScope
@@ -54,7 +56,7 @@ class MainActivity2 : AppCompatActivity() {
     //https://developer.android.com/identity/sign-in/credential-provider#handle-password-queries
     //https://medium.com/novumlogic/using-androids-new-credential-manager-api-14a661cca66f
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
-    fun  onClickbtn_CREDENTIAL_MANAGER(v: View?) {
+    fun  onClickbtn_CREDENTIAL_MANAGER_STORE_PWD(v: View?) {
 
 
             try {
@@ -83,22 +85,33 @@ class MainActivity2 : AppCompatActivity() {
 
     }
 
+    //result  get result android.credentials.TYPE_PASSWORD_CREDENTIAL Bundle[{androidx.credentials.BUNDLE_KEY_ID=ndzl, androidx.credentials.BUNDLE_KEY_PASSWORD=Zebra123}]
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    fun  onClickbtn_CREDENTIAL_MANAGER_RETRIEVE_PWD(v: View?) {
+        try {
+            if(!this::credentialManager.isInitialized)
+                return
 
-    private fun onCreateCredentialResponse(response: CreateCredentialResponse) {
-//        if (response is CreateCredentialResponse) {
-//            Log.d("CredentialManagerTest", "Credential stored successfully")
-//        } else if (response is CreateCredentialResponse.Failure) {
-//            Log.e("CredentialManagerTest", "Credential storage failed: ${response.data.errorMessage}")
-//        }
-        Log.i("onCreateCredentialResponse", "response: $response")
+            val getCredRequest = GetCredentialRequest(listOf(GetPasswordOption()))
+
+            GlobalScope.launch {
+
+                    try {
+                        val result = credentialManager.getCredential(ctx, getCredRequest)
+                        //handleGetPasswordResult(result)
+                        Log.d("onClickbtn_CREDENTIAL_MANAGER_RETRIEVE_PWD", "get result ${result.credential.type} ${result.credential.data}")
+                    } catch (e: Exception) {
+                        Log.d("onClickbtn_CREDENTIAL_MANAGER_RETRIEVE_PWD", "GetCredentialException ${e.message}")
+                    }
+
+            }
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_CREDENTIAL_MANAGER " + e.message)
+        }
+
+
     }
 
-    private fun onGetCredentialResponse(response: GetCredentialResponse) {
-//        if (response is GetCredentialResponse.) {
-//            val credential = response.credential.data
-//            Log.d("CredentialManagerTest", "Retrieved credential: ${credential.}")
-//        } else if (response is GetCredentialResponse.Failure) {
-//            Log.e("CredentialManagerTest", "Credential retrieval failed: ${response.data.errorMessage}")
-//        }
-    }
+
 }
