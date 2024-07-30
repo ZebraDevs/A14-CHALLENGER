@@ -6,6 +6,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.ComponentName
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
@@ -23,7 +24,15 @@ class MyForegroundService : Service() {
         val notification = createNotification()
         startForeground(1, notification)
         // ... your service logic
+
+
+
+
         return START_STICKY
+    }
+
+    override fun startForegroundService(service: Intent?): ComponentName? {
+        return super.startForegroundService(service)
     }
 
     private fun createNotification(): Notification {

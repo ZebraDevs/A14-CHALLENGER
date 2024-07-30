@@ -1,13 +1,23 @@
 package com.ndzl.a14challenger
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.PixelFormat
+import android.hardware.display.DisplayManager
+import android.hardware.display.VirtualDisplay
+import android.media.ImageReader
+import android.media.projection.MediaProjection
+import android.media.projection.MediaProjectionManager
 
 import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -32,12 +42,23 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingExcept
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlin.properties.Delegates
 
-class MainActivity2 : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity()  {
 
     private lateinit var credentialManager: CredentialManager
 
     private lateinit var ctx: Context
+
+    companion object {
+        const val TAG = "MainActivity2"
+        lateinit var metrics: DisplayMetrics
+        var density by Delegates.notNull<Int>()
+
+        lateinit var mediaProjection: MediaProjection
+        lateinit var imageReader: ImageReader
+        lateinit var virtualDisplay: VirtualDisplay
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +66,12 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         ctx = this@MainActivity2
+
+
+
+        metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+        density = metrics.densityDpi
 
     }
 
@@ -204,5 +231,50 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
 
+
+    fun onClickbtn_TAKESCREENSHOT(v: View?) {
+        try {
+
+            startScreenCapture()
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_TAKESCREENSHOT " + e.message)
+        }
+    }
+
+    private fun startScreenCapture() {
+        val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
+        startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), 3003)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 3003 && resultCode == RESULT_OK) {
+
+            val intentFGS: Intent = ScreenCaptureService.newIntent(this, resultCode, data!!)
+            startForegroundService( intentFGS )
+        }
+    }
+
+    val screenCaptureCallback = Activity.ScreenCaptureCallback {
+        //show a Toast message
+        Log.d("TAG", "Screen capture started")
+        Toast.makeText(this, "Screen capture started", Toast.LENGTH_SHORT).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    override fun onStart() {
+        super.onStart()
+        // Pass in the callback created in the previous step
+        // and the intended callback executor (e.g. Activity's mainExecutor).
+        registerScreenCaptureCallback(mainExecutor, screenCaptureCallback)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    override fun onStop() {
+        super.onStop()
+        unregisterScreenCaptureCallback(screenCaptureCallback)
+    }
 
 }

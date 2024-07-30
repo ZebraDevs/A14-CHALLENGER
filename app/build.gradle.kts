@@ -12,7 +12,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.3 Credential Manager exerciser"
+        versionName = "1.4 Screenshot Detection exerciser"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
