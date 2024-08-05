@@ -309,4 +309,35 @@ class MainActivity2 : AppCompatActivity()  {
         }
     }
 
+    fun onClickbtn_STARTACTVIAPENDINT(v: View?) {
+        try {
+
+            //directly start a local activity startActivity( Intent(this, PendingIntentsActivity::class.java)  )
+
+            var ao = androidx.core.app.ActivityOptionsCompat.makeBasic()
+            ao.set
+
+
+            val thisappFooActivity = Intent(this, PendingIntentsActivity::class.java)
+            val pendingIntentForThisappFooActivity = PendingIntent.getActivity(this, 12345, thisappFooActivity, PendingIntent.FLAG_IMMUTABLE)
+
+
+
+            //send an explicit intent to another app
+            val intentShipper = Intent()
+           // intentShipper.setClassName("com.ndzl.a14companion", "com.ndzl.a14companion.MainActivity")
+            intentShipper.action = "com.ndzl.a14companion"
+            intentShipper.putExtra("pending_intent", pendingIntentForThisappFooActivity)
+            intentShipper.putExtra("data", "Hello from Challenger")
+
+
+            sendBroadcast(intentShipper)
+
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_STARTACTVIAPENDINT " + e.message)
+
+        }
+    }
+
 }

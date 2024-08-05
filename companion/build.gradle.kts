@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ndzl.a14challenger"
+    namespace = "com.ndzl.a14companion"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.ndzl.a14challenger"
+        applicationId = "com.ndzl.a14companion"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
