@@ -1,6 +1,7 @@
 package com.ndzl.a14challenger
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -10,6 +11,7 @@ import android.hardware.display.VirtualDisplay
 import android.media.ImageReader
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
+import android.net.Uri
 
 import android.os.Build
 import android.os.Bundle
@@ -41,7 +43,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+
 import kotlin.properties.Delegates
 
 class MainActivity2 : AppCompatActivity()  {
@@ -242,6 +244,7 @@ class MainActivity2 : AppCompatActivity()  {
         }
     }
 
+
     private fun startScreenCapture() {
         val mediaProjectionManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), 3003)
@@ -275,6 +278,35 @@ class MainActivity2 : AppCompatActivity()  {
     override fun onStop() {
         super.onStop()
         unregisterScreenCaptureCallback(screenCaptureCallback)
+    }
+
+
+
+    fun onClickbtn_PENDINGINTENTS(v: View?) {
+        try {
+            // to showcase https://developer.android.com/about/versions/14/behavior-changes-14#safer-intents
+            // https://developer.android.com/privacy-and-security/risks/pending-intent#mitigations
+
+            val implicitIntent= Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("https://www.zebra.com") // Example data
+                // Add the following line to the intent to make it explicit and prevent a runtime exception to be raised on API 34+
+             //   setClassName("com.ndzl.a14challenger", "com.ndzl.a14challenger.MainActivity2")
+            }
+            val  pendingIntent =
+            PendingIntent.getActivity(
+                this ,
+                /* requestCode = */ 0,
+                implicitIntent, /* flags = */ PendingIntent.FLAG_MUTABLE
+            )
+
+
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_PENDINGINTENTS " + e.message)
+
+            //GETTING New mutable implicit PendingIntent: pkg=com.ndzl.a14challenger, action=android.intent.action.VIEW, featureId=null. This will be blocked once the app targets U+ for security reasons.
+
+        }
     }
 
 }

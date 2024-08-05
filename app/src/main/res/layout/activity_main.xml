@@ -95,6 +95,15 @@
                 android:text="TAKE\nSCREENSHOT" />
 
 
+            <Button
+                android:id="@+id/btn_PENDINGINTENTS"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickbtn_PENDINGINTENTS"
+                android:text="PENDING\nINTENTS" />
 
 
         </LinearLayout>

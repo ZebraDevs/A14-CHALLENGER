@@ -12,7 +12,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.4 Screenshot Detection exerciser"
+        versionName = "1.5 Mutable Pending Intents exerciser"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
