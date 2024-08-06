@@ -314,10 +314,6 @@ class MainActivity2 : AppCompatActivity()  {
 
             //directly start a local activity startActivity( Intent(this, PendingIntentsActivity::class.java)  )
 
-            var ao = androidx.core.app.ActivityOptionsCompat.makeBasic()
-            ao.set
-
-
             val thisappFooActivity = Intent(this, PendingIntentsActivity::class.java)
             val pendingIntentForThisappFooActivity = PendingIntent.getActivity(this, 12345, thisappFooActivity, PendingIntent.FLAG_IMMUTABLE)
 
