@@ -20,6 +20,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
+        <service
+            android:name=".JobServiceExerciser"
+
+            android:permission="android.permission.BIND_JOB_SERVICE" ></service>
+
         <activity
             android:name=".PendingIntentsActivity"
             android:exported="false" />
@@ -28,7 +33,7 @@
             android:name=".ScreenCaptureService"
             android:enabled="true"
             android:exported="true"
-            android:foregroundServiceType="mediaProjection"></service>
+            android:foregroundServiceType="mediaProjection" />
 
         <activity
             android:name=".MainActivity2"

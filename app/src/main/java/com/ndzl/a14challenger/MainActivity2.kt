@@ -2,31 +2,24 @@ package com.ndzl.a14challenger
 
 import android.app.Activity
 import android.app.PendingIntent
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.PixelFormat
-import android.hardware.display.DisplayManager
 import android.hardware.display.VirtualDisplay
 import android.media.ImageReader
 import android.media.projection.MediaProjection
 import android.media.projection.MediaProjectionManager
 import android.net.Uri
-
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.credentials.CreateCredentialRequest
-import androidx.credentials.CreateCredentialResponse
 import androidx.credentials.CreatePasswordRequest
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
@@ -38,12 +31,17 @@ import androidx.credentials.PublicKeyCredential
 import androidx.credentials.exceptions.CreateCredentialCancellationException
 import androidx.credentials.exceptions.CreateCredentialException
 import androidx.credentials.exceptions.GetCredentialException
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
+import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
 class MainActivity2 : AppCompatActivity()  {
@@ -278,6 +276,8 @@ class MainActivity2 : AppCompatActivity()  {
     override fun onStop() {
         super.onStop()
         unregisterScreenCaptureCallback(screenCaptureCallback)
+
+        Log.i("MainActivity2", "onStop was called. This is relevant to learn when the app enters a cached state.")
     }
 
 
@@ -317,8 +317,6 @@ class MainActivity2 : AppCompatActivity()  {
             val thisappFooActivity = Intent(this, PendingIntentsActivity::class.java)
             val pendingIntentForThisappFooActivity = PendingIntent.getActivity(this, 12345, thisappFooActivity, PendingIntent.FLAG_IMMUTABLE)
 
-
-
             //send an explicit intent to another app
             val intentShipper = Intent()
            // intentShipper.setClassName("com.ndzl.a14companion", "com.ndzl.a14companion.MainActivity")
@@ -326,14 +324,127 @@ class MainActivity2 : AppCompatActivity()  {
             intentShipper.putExtra("pending_intent", pendingIntentForThisappFooActivity)
             intentShipper.putExtra("data", "Hello from Challenger")
 
-
             sendBroadcast(intentShipper)
-
 
         } catch (e: Exception) {
             Log.e("TAG", "onClickbtn_STARTACTVIAPENDINT " + e.message)
 
         }
+    }
+
+
+    fun onClickbtn_BACKGRDCOROUTINES(v: View?) {
+        try {
+
+
+            startRepeatingTaskAsRunnable(1000)
+
+            startRepeatingTaskWithCoroutines(1000)
+  
+            startRepeatingTaskWithWorkmanager(1000) //no less than 15 minute period!  Interval duration lesser than minimum allowed value; Changed to 900000
+
+            startRepeatingTaskWithJobScheduler(15 * 60 * 1000L) //no less than 15 minute period!
+
+            startRepeatingTaskWithJavaThread(1000)
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_BACKGRDCOROUTINES " + e.message)
+
+        }
+    }
+
+    var javathreadCounter =0
+    private fun startRepeatingTaskWithJavaThread(timeInterval: Long) {
+        val one = object : Thread() {
+            override fun run() {
+                try {
+                    while (true) {
+
+                        println("JavaThreadCounter=${javathreadCounter++}")
+                        sleep(timeInterval)
+                    }
+
+                } catch (v: InterruptedException) {
+                    println(v)
+                }
+            }
+        }
+        one.priority = Thread.MAX_PRIORITY
+        one.isDaemon = true
+        one.start()
+    }
+
+    private fun startRepeatingTaskWithWorkmanager(timeInterval: Long) {
+        val workRequest = PeriodicWorkRequestBuilder<MyWorkerExerciser>(timeInterval, TimeUnit.MILLISECONDS)
+            // Additional constraints if needed
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "a14_work_name", // Unique name for the work
+            ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE, // Policy for handling existing work
+            workRequest
+        )
+    }
+
+    var jobschedulerCounter = 0
+    private fun startRepeatingTaskWithJobScheduler(timeInterval:  Long) {
+
+        val componentName = ComponentName(this, JobServiceExerciser::class.java)
+
+        val jobInfo = JobInfo.Builder(123, componentName )
+            .setPeriodic(timeInterval) ///* Minimum interval for a periodic job, in milliseconds. */private static final long MIN_PERIOD_MILLIS = 15 * 60 * 1000L;   // 15 minutes
+            .setPersisted(false) // Persist across device reboots
+            .build()
+
+        val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+        val result = jobScheduler.schedule(jobInfo)
+        if (result == JobScheduler.RESULT_SUCCESS) {
+            Log.i("MainActivity2", "Job scheduled successfully")
+        } else {
+            Log.i("MainActivity2", "Job scheduling failed")
+        }
+    }
+
+    var runnableCounter=0
+    //adding a timer to repeat a task at a certain interval without Coruotines
+    private fun startRepeatingTaskAsRunnable(timeInterval: Long) {
+        val handler = android.os.Handler()
+        val runnable = object : Runnable {
+            override fun run() {
+                try {
+                    Log.i("startRepeatingTaskAsRunnable", "runnableCounter=${runnableCounter++}")
+                } catch (e: Exception) {
+                    Log.e("TAG", "startRepeatingTaskAsRunnable " + e.message)
+                }
+                handler.postDelayed(this, timeInterval)
+            }
+        }
+        handler.postDelayed(runnable, timeInterval)
+    }
+
+    var couroutineCounter=0
+    //adding a timer to repeat a task at a certain interval with Coruotines
+    private fun startRepeatingTaskWithCoroutines(timeInterval: Long) {
+        GlobalScope.launch {
+            while (true) {
+                try {
+                    Log.i("startRepeatingTaskWithCoroutines", "couroutineCounter=${couroutineCounter++}")
+                } catch (e: Exception) {
+                    Log.e("TAG", "startRepeatingTaskWithCoroutines " + e.message)
+                }
+                kotlinx.coroutines.delay(timeInterval)
+            }
+        }
+    }
+
+}
+
+var workmanagerCounter=0
+class MyWorkerExerciser(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+    override fun doWork(): Result {
+        Log.i("MyWorkerExerciser", "workmanagerCounter=${workmanagerCounter++}")
+        return Result.success()
+        //return Result.retry()
     }
 
 }
