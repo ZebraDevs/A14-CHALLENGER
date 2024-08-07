@@ -146,6 +146,15 @@
                 android:onClick="onClickbtn_BACKGRDCOROUTINES"
                 android:text="BACKGROUND\nWORK" />
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:onClick="onClickbtn_EXACTALARMS"
+                android:text="EXACT\nALARMS" />
+
 
         </LinearLayout>
 

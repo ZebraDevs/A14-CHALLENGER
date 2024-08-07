@@ -352,6 +352,25 @@ class MainActivity2 : AppCompatActivity()  {
 
         }
     }
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun onClickbtn_EXACTALARMS(v: View?) {
+        try {
+
+            //schedule an exact alarm to go off in X seconds
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
+            val alarmIntent = Intent(this, ExactAlarmReceiver::class.java)
+            alarmIntent.action = "com.ndzl.a14challenger.EXACT_ALARM"
+            val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE )
+            alarmManager.canScheduleExactAlarms()
+            alarmManager.setExact(android.app.AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 80000, pendingIntent)
+
+            Log.i( "onClickbtn_EXACTALARMS", "Alarm scheduled now ${System.currentTimeMillis()}")
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_EXACTALARMS " + e.message)
+
+        }
+    }
 
     var javathreadCounter =0
     private fun startRepeatingTaskWithJavaThread(timeInterval: Long) {

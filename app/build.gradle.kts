@@ -12,7 +12,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.7 Background work with Coroutines, WorkManager, JobScheduler"
+        versionName = "1.8 Exact Alarms"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

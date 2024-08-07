@@ -9,7 +9,11 @@ import android.util.Log
 
 class JobServiceExerciser : JobService() {
 
-    private var jobschedulerCounter = 0
+
+    companion object{
+        private var jobschedulerCounter = 0
+    }
+
     override fun onStartJob(params: JobParameters?): Boolean {
         Log.i("AnonymousJobService", "Job started")
         // Return true if the job needs to continue running
