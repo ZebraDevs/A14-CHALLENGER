@@ -14,6 +14,7 @@ import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -60,6 +61,7 @@ class MainActivity2 : AppCompatActivity()  {
         lateinit var virtualDisplay: VirtualDisplay
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,6 +74,7 @@ class MainActivity2 : AppCompatActivity()  {
         metrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(metrics)
         density = metrics.densityDpi
+
 
     }
 
@@ -362,7 +365,7 @@ class MainActivity2 : AppCompatActivity()  {
             alarmIntent.action = "com.ndzl.a14challenger.EXACT_ALARM"
             val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE )
             alarmManager.canScheduleExactAlarms()
-            alarmManager.setExact(android.app.AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 80000, pendingIntent)
+            alarmManager.setExact(android.app.AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 8000, pendingIntent)
 
             Log.i( "onClickbtn_EXACTALARMS", "Alarm scheduled now ${System.currentTimeMillis()}")
 

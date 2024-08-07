@@ -12,7 +12,7 @@ android {
         minSdk = 29
         targetSdk = 34
         versionCode = 1
-        versionName = "1.8 Exact Alarms"
+        versionName = "1.8.1 Exact Alarms+Sounds"
 
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
