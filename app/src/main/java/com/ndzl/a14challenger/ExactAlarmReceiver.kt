@@ -7,6 +7,8 @@ import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioManager
 import android.media.AudioTrack
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 
 class ExactAlarmReceiver: BroadcastReceiver() {
@@ -14,13 +16,13 @@ class ExactAlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.i("ExactAlarmReceiver", "Alarm received now  ${System.currentTimeMillis()}")
-
-
-        for (i in 0 until 128) {
-            val random = (50..500).random()
-            playPCMData(generateNote(random.toDouble(), 1.0, 1000))
+        val mainHandler = Handler(Looper.getMainLooper())
+        mainHandler.post {
+            for (i in 0 until 64) {
+                val random = (50..500).random()
+                playPCMData(generateNote(random.toDouble(), 1.0, 1000))
+            }
         }
-
     }
 
     fun generateNote(frequency: Double, durationInSeconds: Double, sampleRate: Int): ByteArray {
@@ -49,7 +51,7 @@ class ExactAlarmReceiver: BroadcastReceiver() {
                         .setSampleRate(11025)
                         .setChannelMask(AudioFormat.CHANNEL_OUT_STEREO)
                         .build(),
-                    /*data.size*/1000000,
+                    data.size,
                     AudioTrack.MODE_STATIC,
                     AudioManager.AUDIO_SESSION_ID_GENERATE
                 )
