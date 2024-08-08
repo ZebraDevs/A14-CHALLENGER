@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.display.VirtualDisplay
 import android.media.ImageReader
 import android.media.projection.MediaProjection
@@ -14,7 +16,6 @@ import android.media.projection.MediaProjectionManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
@@ -284,6 +285,25 @@ class MainActivity2 : AppCompatActivity()  {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        val intentFilter = IntentFilter("android.intent.action.SCREEN_ON")
+        intentFilter.addAction("android.intent.action.SCREEN_OFF")
+        intentFilter.addAction("A14CHALLENGER_BROADCAST_ACTION")
+        registerReceiver(receiverForQueuedBroadcasts, intentFilter, RECEIVER_EXPORTED)
+        Log.d("A14Challenger queued broadcasts", "Context-based receiver registered  at ${java.text.SimpleDateFormat("HH:mm:ss:SSS").format(java.util.Date(System.currentTimeMillis()))}")
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        try {
+            //unregisterReceiver( receiverForQueuedBroadcasts )  // had to comment this out to receive the queued broadcasts, although this is not a goog programming practice!
+        } catch (e: Exception) { }
+    }
+
+
 
     fun onClickbtn_PENDINGINTENTS(v: View?) {
         try {
@@ -344,9 +364,9 @@ class MainActivity2 : AppCompatActivity()  {
 
             startRepeatingTaskWithCoroutines(1000)
   
-            startRepeatingTaskWithWorkmanager(1000) //no less than 15 minute period!  Interval duration lesser than minimum allowed value; Changed to 900000
+            //startRepeatingTaskWithWorkmanager(1000) //no less than 15 minute period!  Interval duration lesser than minimum allowed value; Changed to 900000
 
-            startRepeatingTaskWithJobScheduler(15 * 60 * 1000L) //no less than 15 minute period!
+            //startRepeatingTaskWithJobScheduler(15 * 60 * 1000L) //no less than 15 minute period!
 
             startRepeatingTaskWithJavaThread(1000)
 
@@ -374,6 +394,27 @@ class MainActivity2 : AppCompatActivity()  {
 
         }
     }
+
+    val receiverForQueuedBroadcasts = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            Log.d("A14Challenger queued broadcasts", "Broadcast received at ${java.text.SimpleDateFormat("HH:mm:ss:SSS").format(java.util.Date(System.currentTimeMillis()))} as ${intent.action}")
+        }
+    }
+
+    fun onClickbtn_QUEUEDBROADCASTS(v: View?) {
+        try {
+
+
+            /*No code has been developed in this callback. Please see the broadcast receiver registered in the onResume and the unregister in onPause*/
+
+
+        } catch (e: Exception) {
+            Log.e("TAG", "onClickbtn_QUEUEDBROADCASTS " + e.message)
+
+        }
+    }
+
+
 
     var javathreadCounter =0
     private fun startRepeatingTaskWithJavaThread(timeInterval: Long) {
