@@ -43,6 +43,7 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -414,6 +415,51 @@ class MainActivity2 : AppCompatActivity()  {
         }
     }
 
+    fun onClickbtn_JDK17_1(v: View?) {
+    //intentionally left without try/catch block to raise an exception and compare across android targets
+        //UUID
+
+            var invalidUuidString: String = " 123e4567-e89b-12d3-a456-426655440000 "
+            var uuid: UUID = UUID.fromString(invalidUuidString)
+
+    }
+
+    fun onClickbtn_JDK17_2(v: View?) {
+        //intentionally left without try/catch block to raise an exception and compare across android targets
+        //REGEX
+
+/*
+        println("Executing a wrong regex and capturing the exception")
+        try {
+            val regex = Regex("(?<name>\\w+) (?<age>\\d+)")
+            val match = regex.matchEntire("John 30")
+            val value = match!!.groups["Name"]?.value  // Accessing with incorrect capitalization
+        } catch (e: IllegalArgumentException) {
+            println("IllegalArgumentException / Invalid regex: ${e.message}")
+        } catch(ex: Exception) {
+            println("Exception / Invalid regex: ${ex.message}")
+        }
+
+        println("Executing a wrong regex without a try/catch block")
+        val regex = Regex("(?<name>\\w+) (?<age>\\d+)")
+        val match = regex.matchEntire("John 30")
+        val value = match!!.groups["Name"]?.value  // Accessing with incorrect capitalization
+
+        // both the above code snippets will raise an exception in A14 IllegalArgumentException / Invalid regex: No capturing group in the pattern with the name Name
+*/
+
+        RegexStressTest.two()
+
+    }
+
+    fun onClickbtn_JDK17_3(v: View?) {
+        //intentionally left without try/catch block to raise an exception and compare across android targets
+        //REGEX
+
+
+        RegexStressTest.three()
+
+    }
 
 
     var javathreadCounter =0

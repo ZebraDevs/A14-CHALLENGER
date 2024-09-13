@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AppCompat">
 
         <activity
-            android:name="com.ndzl.a14companion.MainActivity"
+            android:name="com.ndzl.a14oldtarget.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

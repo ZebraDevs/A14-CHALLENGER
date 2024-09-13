@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "A14Challenger"
 include(":app")
 include(":companion")
+include(":oldApiTarget")
