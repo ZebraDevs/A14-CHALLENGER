@@ -20,6 +20,7 @@ and here is how buttons link to the sample code.
 - [Restrictions to implicit and pending intents](#intentrestrict)
     * [MUTABLE PENDING INTENTS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L309)
     * [BACKGROUND PENDING INTENTS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L336)
+    * Also maps to this [Companion App](https://github.com/ZebraDevs/A14-CHALLENGER/blob/147bb41b78204c0a34c64dc94fd41eed4c653d50/companion/src/main/java/com/ndzl/a14companion/MainActivity.kt#L39)
  
 - [Restrictions on background work](#bgwrestrict) => [BACKGROUND WORK Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L360)
 
