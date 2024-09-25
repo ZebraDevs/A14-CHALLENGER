@@ -25,7 +25,7 @@ and here is how buttons link to the sample code.
 
 - [Schedule exact alarms are denied by default](#exactalarms) => [EXACT ALARMS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L380)
 
-- [Queued Broadcasts](#queuedbroadcasts)
+- [Queued Broadcasts](#queuedbroadcasts) => [QUEUED BROADCASTS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L405)
 
 
 - [OpenJDK17](#openjdk17)
