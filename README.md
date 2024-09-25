@@ -11,9 +11,11 @@ and here is how buttons link to the sample code.
 - [Typed Foreground Services](#fgstyperequired) => [onClickbtn_TYPED_FGS](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L84)
 - [Minimum installable target API level](#mintargetapi) => see the specific module [oldApiTarget](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/oldApiTarget/build.gradle.kts#L13)
 
-- [Credential Manager](#credman) =>
+- [Credential Manager](#credman)
     * [SAVE Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L98C21-L98C49)
     * [RETRIEVE Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L129)
+    * [Google Flow](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L157)
+
 - [Screenshot detection](#screendetect)
 - [Restrictions to implicit and pending intents](#intentrestrict)
 - [Restrictions on background work](#bgwrestrict)
