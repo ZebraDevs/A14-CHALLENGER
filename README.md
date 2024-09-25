@@ -21,7 +21,7 @@ and here is how buttons link to the sample code.
     * [MUTABLE PENDING INTENTS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L309)
     * [BACKGROUND PENDING INTENTS Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L336)
  
-- [Restrictions on background work](#bgwrestrict)
+- [Restrictions on background work](#bgwrestrict) => [BACKGROUND WORK Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L360)
 
 PERFORMANCE AND CORE FEATURES AFFECTING ALL APPS
 - [Schedule exact alarms are denied by default](#exactalarms)
