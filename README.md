@@ -2,7 +2,7 @@ Exerciser for Android 14, linked to Nicola De Zolt's blog on [Nicola De Zolt's b
 
 _Please be aware that this application / sample is provided as-is for demonstration purposes without any guarantee of support_
 
-Here is the app landing page; see below how each button maps to its respsctive topic in the blog and to the sample code.
+Here is the app landing page; see below how each button maps to its respective topic in the blog and to the sample code.
 
 ![image](https://github.com/user-attachments/assets/17d4ecba-1a90-4e48-b553-067578cf043c)
 
