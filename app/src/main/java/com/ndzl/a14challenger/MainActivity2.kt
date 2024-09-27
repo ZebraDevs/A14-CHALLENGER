@@ -391,8 +391,7 @@ class MainActivity2 : AppCompatActivity()  {
             Log.i( "onClickbtn_EXACTALARMS", "Alarm scheduled now ${System.currentTimeMillis()}")
 
         } catch (e: Exception) {
-            Log.e("TAG", "onClickbtn_EXACTALARMS " + e.message)
-
+            Log.e("TAG", "onClickbtn_EXACTALARMS: " + e.message)
         }
     }
 
