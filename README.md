@@ -32,3 +32,5 @@ and here is how buttons link to the sample code.
     * [JDK 17 (UUID) Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L418)
     * [JDK 17 (REGEX) Middle Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L427)
     * [JDK 17 (REGEX) Rightmost Button](https://github.com/ZebraDevs/A14-CHALLENGER/blob/c75692173952a1eb1a1f177f30afd812e57839a0/app/src/main/java/com/ndzl/a14challenger/MainActivity2.kt#L455)
+ 
+  ![image](https://cxnt48.com/author?ghA14challenger) 
